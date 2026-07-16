@@ -1,3 +1,4 @@
+import { systemPrompt } from "../../../prompts/systemPrompt";
 import { NextResponse } from "next/server";
 import { openai } from "../../../lib/openai";
 
@@ -13,8 +14,9 @@ export async function POST(req: Request) {
     }
     console.log("OPENAI_API_KEY =", process.env.OPENAI_API_KEY);
     const response = await openai.responses.create({
-      model: "gpt-5.5",
-      input: message,
+    model: "gpt-5.5",
+    instructions: systemPrompt,
+    input: message,
     });
 
     return NextResponse.json({
