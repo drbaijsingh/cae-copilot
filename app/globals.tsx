@@ -24,75 +24,17 @@
   --error: #ef4444;
 }
 
-/* ============================================================
-   BASE STYLES
-   ============================================================ */
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 body {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #e2e8f0;
   background: var(--background);
+  color: var(--text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
-}
-
-/* ============================================================
-   TYPOGRAPHY
-   ============================================================ */
-
-h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-h2 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-}
-
-h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-h4 {
-  font-size: 1.1rem;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  color: var(--text-secondary);
-}
-
-a {
-  color: var(--primary-light);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: var(--primary);
 }
 
 /* ============================================================
@@ -162,22 +104,12 @@ a:hover {
   }
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
 .animate-slideIn {
   animation: slideIn 0.3s ease-out forwards;
-}
-
-.animate-pulse {
-  animation: pulse 2s ease-in-out infinite;
 }
 
 /* ============================================================
@@ -217,48 +149,34 @@ a:hover {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
   border: none;
-  padding: 0.85rem 2.5rem;
-  border-radius: 9999px;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4);
 }
 
 .btn-primary:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.btn-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
+  transform: translateY(0);
 }
 
 .btn-secondary {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.85rem 2.5rem;
-  border-radius: 9999px;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
 }
 
 .btn-secondary:hover {
@@ -274,26 +192,21 @@ a:hover {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.75rem;
-  padding: 0.875rem 1rem;
+  padding: 0.75rem 1rem;
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 0.875rem;
   transition: all 0.3s ease;
   width: 100%;
-  outline: none;
 }
 
 .input-primary:focus {
+  outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .input-primary::placeholder {
   color: var(--text-secondary);
-}
-
-.input-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 /* ============================================================
@@ -340,74 +253,27 @@ a:hover {
 }
 
 /* ============================================================
-   UPLOAD BOX
-   ============================================================ */
-
-.upload-box {
-  background: rgba(255, 255, 255, 0.03);
-  border: 2px dashed rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 2.5rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.upload-box:hover {
-  border-color: var(--primary);
-  background: rgba(37, 99, 235, 0.05);
-}
-
-.upload-box.dragging {
-  border-color: var(--primary);
-  background: rgba(37, 99, 235, 0.1);
-  transform: scale(1.01);
-}
-
-/* ============================================================
    CHAT MESSAGES
    ============================================================ */
 
 .message-user {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
-  border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
-  padding: 1rem 1.5rem;
+  border-radius: 1rem 1rem 0.25rem 1rem;
+  padding: 1rem 1.25rem;
   max-width: 80%;
   margin-left: auto;
-  font-size: 1rem;
-  line-height: 1.6;
   animation: slideIn 0.3s ease-out forwards;
-  word-wrap: break-word;
 }
 
 .message-assistant {
   background: var(--surface);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
-  padding: 1rem 1.5rem;
+  border-radius: 1rem 1rem 1rem 0.25rem;
+  padding: 1rem 1.25rem;
   max-width: 80%;
   margin-right: auto;
-  font-size: 1rem;
-  line-height: 1.6;
   animation: fadeIn 0.5s ease-out forwards;
-  word-wrap: break-word;
-}
-
-.message-assistant code {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-}
-
-.message-assistant pre {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  overflow-x: auto;
-  margin: 0.5rem 0;
 }
 
 /* ============================================================
@@ -539,7 +405,18 @@ a:hover {
 }
 
 /* ============================================================
-   SPINNER / LOADING
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .message-user,
+  .message-assistant {
+    max-width: 95%;
+  }
+}
+
+/* ============================================================
+   LOADING SPINNER
    ============================================================ */
 
 .spinner {
@@ -552,94 +429,8 @@ a:hover {
   animation: spin 0.8s linear infinite;
 }
 
-/* ============================================================
-   PROSE / CONTENT STYLES
-   ============================================================ */
-
-.prose-invert {
-  color: var(--text-secondary);
-}
-
-.prose-invert h1,
-.prose-invert h2,
-.prose-invert h3,
-.prose-invert h4 {
-  color: var(--text-primary);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-.prose-invert p {
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-}
-
-.prose-invert ul,
-.prose-invert ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.prose-invert li {
-  margin-bottom: 0.5rem;
-}
-
-.prose-invert a {
-  color: var(--primary-light);
-}
-
-.prose-invert a:hover {
-  text-decoration: underline;
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-@media (max-width: 640px) {
-  html {
-    font-size: 14px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  .message-user,
-  .message-assistant {
-    max-width: 95%;
-    font-size: 0.95rem;
-  }
-
-  .glass {
-    padding: 1rem !important;
-  }
-
-  .stat-card {
-    padding: 0.75rem !important;
-  }
-
-  .stat-card .value {
-    font-size: 1.1rem !important;
-  }
-
-  .btn-primary,
-  .btn-secondary {
-    padding: 0.65rem 1.5rem;
-    font-size: 0.9rem;
-  }
-
-  .upload-box {
-    padding: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .stat-card .value {
-    font-size: 1.25rem;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
