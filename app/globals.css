@@ -5,28 +5,30 @@
 @tailwind utilities;
 
 /* ============================================================
-   PROFESSIONAL COLOR SCHEME
+   PROFESSIONAL POWER BI INSPIRED THEME
    ============================================================ */
 
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --primary-light: #60a5fa;
-  --secondary: #7c3aed;
-  --accent: #06b6d4;
-  --background: #0f172a;
-  --surface: #1e293b;
-  --surface-light: #334155;
-  --text-primary: #f8fafc;
+  --primary: #0078d4;
+  --primary-dark: #005a9e;
+  --primary-light: #50b7f8;
+  --secondary: #2b88d8;
+  --accent: #ffb900;
+  --background: #1a1a2e;
+  --surface: #16213e;
+  --surface-light: #1a2744;
+  --surface-card: #1e2a4a;
+  --text-primary: #ffffff;
   --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-color: rgba(255,255,255,0.06);
+  --shadow: 0 8px 32px rgba(0,0,0,0.3);
   --success: #22c55e;
   --warning: #eab308;
-  --error: #ef4444;
+  --danger: #ef4444;
+  --gradient-start: #0078d4;
+  --gradient-end: #00b4d8;
 }
-
-/* ============================================================
-   BASE STYLES
-   ============================================================ */
 
 * {
   margin: 0;
@@ -34,86 +36,29 @@
   box-sizing: border-box;
 }
 
-html {
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 body {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #e2e8f0;
-  background: var(--background);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  background: var(--background);
+  color: var(--text-primary);
+  line-height: 1.6;
 }
 
 /* ============================================================
-   TYPOGRAPHY
-   ============================================================ */
-
-h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-h2 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-}
-
-h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-h4 {
-  font-size: 1.1rem;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  color: var(--text-secondary);
-}
-
-a {
-  color: var(--primary-light);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: var(--primary);
-}
-
-/* ============================================================
-   SCROLLBAR STYLING
+   SCROLLBAR
    ============================================================ */
 
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--surface);
   border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
   border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-dark);
 }
@@ -122,474 +67,254 @@ a:hover {
    ANIMATIONS
    ============================================================ */
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateX(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,120,212,0.3); }
+  50% { box-shadow: 0 0 40px rgba(0,120,212,0.6); }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-.animate-slideIn {
-  animation: slideIn 0.3s ease-out forwards;
-}
-
-.animate-pulse {
-  animation: pulse 2s ease-in-out infinite;
+.animate-slideInLeft {
+  animation: slideInLeft 0.5s ease-out forwards;
 }
 
 /* ============================================================
-   GLASS EFFECT
+   GLASS EFFECT - POWER BI STYLE
    ============================================================ */
 
-.glass {
-  background: rgba(30, 41, 59, 0.8);
+.glass-card {
+  background: rgba(30, 42, 74, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
 }
 
-.glass-light {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.glass-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,120,212,0.3);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.4);
 }
 
 /* ============================================================
-   GRADIENT TEXT
+   GRADIENT TEXT & BUTTONS
    ============================================================ */
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ============================================================
-   BUTTON STYLES
-   ============================================================ */
-
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
   border: none;
-  padding: 0.85rem 2.5rem;
-  border-radius: 9999px;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0,120,212,0.3);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4);
-}
-
-.btn-primary:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.btn-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,120,212,0.5);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255,255,255,0.05);
   color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.85rem 2.5rem;
-  border-radius: 9999px;
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
 }
 
 /* ============================================================
-   INPUT STYLES
+   POWER BI DASHBOARD CARDS
    ============================================================ */
 
-.input-primary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.75rem;
-  padding: 0.875rem 1rem;
-  color: var(--text-primary);
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  width: 100%;
-  outline: none;
-}
-
-.input-primary:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-.input-primary::placeholder {
-  color: var(--text-secondary);
-}
-
-.input-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ============================================================
-   CUSTOM FILE UPLOAD
-   ============================================================ */
-
-.file-upload {
-  position: relative;
-  display: inline-block;
-}
-
-.file-upload-input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.file-upload-label {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 0.75rem;
-  color: var(--text-secondary);
-  cursor: pointer;
+.metric-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
   transition: all 0.3s ease;
 }
 
-.file-upload-label:hover {
+.metric-card:hover {
   border-color: var(--primary);
-  background: rgba(37, 99, 235, 0.05);
+  box-shadow: 0 4px 20px rgba(0,120,212,0.15);
 }
 
-.file-upload-label.dragging {
-  border-color: var(--primary);
-  background: rgba(37, 99, 235, 0.1);
-  transform: scale(1.02);
-}
-
-/* ============================================================
-   UPLOAD BOX
-   ============================================================ */
-
-.upload-box {
-  background: rgba(255, 255, 255, 0.03);
-  border: 2px dashed rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 2.5rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.upload-box:hover {
-  border-color: var(--primary);
-  background: rgba(37, 99, 235, 0.05);
-}
-
-.upload-box.dragging {
-  border-color: var(--primary);
-  background: rgba(37, 99, 235, 0.1);
-  transform: scale(1.01);
-}
-
-/* ============================================================
-   CHAT MESSAGES
-   ============================================================ */
-
-.message-user {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
-  padding: 1rem 1.5rem;
-  max-width: 80%;
-  margin-left: auto;
-  font-size: 1rem;
-  line-height: 1.6;
-  animation: slideIn 0.3s ease-out forwards;
-  word-wrap: break-word;
-}
-
-.message-assistant {
-  background: var(--surface);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
-  padding: 1rem 1.5rem;
-  max-width: 80%;
-  margin-right: auto;
-  font-size: 1rem;
-  line-height: 1.6;
-  animation: fadeIn 0.5s ease-out forwards;
-  word-wrap: break-word;
-}
-
-.message-assistant code {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-}
-
-.message-assistant pre {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  overflow-x: auto;
-  margin: 0.5rem 0;
-}
-
-/* ============================================================
-   STATS CARDS
-   ============================================================ */
-
-.stat-card {
-  background: var(--surface);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 0.75rem;
-  padding: 1.25rem;
-  transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(37, 99, 235, 0.3);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-}
-
-.stat-card .icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.5rem;
+.metric-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
 }
 
-.stat-card .value {
-  font-size: 1.5rem;
+.metric-value {
+  font-size: 2rem;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.stat-card .label {
-  font-size: 0.75rem;
+.metric-label {
+  font-size: 0.8rem;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 /* ============================================================
-   HEALTH INDICATOR
+   CHAT MESSAGES - POWER BI STYLE
    ============================================================ */
 
-.health-indicator {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem;
-  background: var(--surface);
-  border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.message-user {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border-radius: 16px 16px 4px 16px;
+  padding: 1rem 1.5rem;
+  max-width: 80%;
+  margin-left: auto;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  animation: slideInLeft 0.3s ease-out forwards;
 }
 
-.health-bar {
-  flex: 1;
-  height: 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 0.25rem;
-  overflow: hidden;
-}
-
-.health-bar-fill {
-  height: 100%;
-  border-radius: 0.25rem;
-  transition: width 1s ease;
-}
-
-.health-bar-fill.excellent {
-  background: linear-gradient(90deg, #22c55e, #16a34a);
-}
-
-.health-bar-fill.good {
-  background: linear-gradient(90deg, #eab308, #ca8a04);
-}
-
-.health-bar-fill.poor {
-  background: linear-gradient(90deg, #ef4444, #dc2626);
+.message-assistant {
+  background: var(--surface-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px 16px 16px 4px;
+  padding: 1rem 1.5rem;
+  max-width: 80%;
+  margin-right: auto;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  animation: fadeInUp 0.5s ease-out forwards;
 }
 
 /* ============================================================
-   TAGS / CHIPS
+   HEALTH INDICATOR
+   ============================================================ */
+
+.health-ring {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: conic-gradient(
+    var(--primary) 70%,
+    rgba(255,255,255,0.05) 70%
+  );
+  position: relative;
+}
+
+.health-ring-inner {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--surface-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* ============================================================
+   UPLOAD ZONE
+   ============================================================ */
+
+.upload-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  background: rgba(255,255,255,0.02);
+}
+
+.upload-zone:hover {
+  border-color: var(--primary);
+  background: rgba(0,120,212,0.05);
+}
+
+.upload-zone.dragging {
+  border-color: var(--primary);
+  background: rgba(0,120,212,0.1);
+  transform: scale(1.02);
+}
+
+/* ============================================================
+   TAGS
    ============================================================ */
 
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: 0.5rem;
   padding: 0.25rem 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 9999px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
   font-size: 0.75rem;
   color: var(--text-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.2s ease;
-}
-
-.tag:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
 }
 
 .tag-primary {
-  background: rgba(37, 99, 235, 0.15);
+  background: rgba(0,120,212,0.15);
   color: var(--primary-light);
-  border-color: rgba(37, 99, 235, 0.2);
+  border-color: rgba(0,120,212,0.2);
 }
 
 .tag-success {
-  background: rgba(34, 197, 94, 0.15);
+  background: rgba(34,197,94,0.15);
   color: var(--success);
-  border-color: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34,197,94,0.2);
 }
 
 .tag-warning {
-  background: rgba(234, 179, 8, 0.15);
+  background: rgba(234,179,8,0.15);
   color: var(--warning);
-  border-color: rgba(234, 179, 8, 0.2);
-}
-
-.tag-error {
-  background: rgba(239, 68, 68, 0.15);
-  color: var(--error);
-  border-color: rgba(239, 68, 68, 0.2);
-}
-
-/* ============================================================
-   SPINNER / LOADING
-   ============================================================ */
-
-.spinner {
-  display: inline-block;
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-/* ============================================================
-   PROSE / CONTENT STYLES
-   ============================================================ */
-
-.prose-invert {
-  color: var(--text-secondary);
-}
-
-.prose-invert h1,
-.prose-invert h2,
-.prose-invert h3,
-.prose-invert h4 {
-  color: var(--text-primary);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-.prose-invert p {
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-}
-
-.prose-invert ul,
-.prose-invert ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.prose-invert li {
-  margin-bottom: 0.5rem;
-}
-
-.prose-invert a {
-  color: var(--primary-light);
-}
-
-.prose-invert a:hover {
-  text-decoration: underline;
+  border-color: rgba(234,179,8,0.2);
 }
 
 /* ============================================================
@@ -597,49 +322,10 @@ a:hover {
    ============================================================ */
 
 @media (max-width: 640px) {
-  html {
-    font-size: 14px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  .message-user,
-  .message-assistant {
+  .message-user, .message-assistant {
     max-width: 95%;
-    font-size: 0.95rem;
   }
-
-  .glass {
-    padding: 1rem !important;
-  }
-
-  .stat-card {
-    padding: 0.75rem !important;
-  }
-
-  .stat-card .value {
-    font-size: 1.1rem !important;
-  }
-
-  .btn-primary,
-  .btn-secondary {
-    padding: 0.65rem 1.5rem;
-    font-size: 0.9rem;
-  }
-
-  .upload-box {
-    padding: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .stat-card .value {
-    font-size: 1.25rem;
+  .metric-value {
+    font-size: 1.5rem;
   }
 }

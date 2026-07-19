@@ -3,14 +3,24 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { EnhancedDashboard } from './EnhancedDashboard';
+import { ProfessionalDashboard } from './ProfessionalDashboard';
+import { ProfessionalLayout } from './ProfessionalLayout';
 import { EngineeringModel } from '@/lib/abaqus/types';
+import { 
+  Upload, 
+  Send, 
+  FileUp, 
+  Sparkles,
+  Loader2,
+  CheckCircle,
+  AlertCircle,
+  MessageSquare,
+  Zap
+} from 'lucide-react';
 
-// REMOVED: timestamp from Message interface
 interface Message {
   role: 'user' | 'assistant' | 'system';
   content: string;
-  // timestamp removed to fix hydration error
 }
 
 export function EnhancedChat() {
@@ -18,7 +28,6 @@ export function EnhancedChat() {
     {
       role: 'system',
       content: '👋 Welcome to CAE Copilot! Upload a .inp file or ask any FEA question.',
-      // timestamp removed
     },
   ]);
   const [input, setInput] = useState('');
@@ -29,7 +38,6 @@ export function EnhancedChat() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -89,9 +97,7 @@ export function EnhancedChat() {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userMessage,
-        }),
+        body: JSON.stringify({ message: userMessage }),
       });
 
       const data = await response.json();
@@ -111,65 +117,45 @@ export function EnhancedChat() {
     setLoading(false);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const files = e.dataTransfer.files;
-    if (files.length > 0 && files[0].name.endsWith('.inp')) {
-      handleFileUpload(files[0]);
-    }
-  };
-
   return (
-    <div className="max-w-6xl mx-auto px-4">
-      {/* Upload Section */}
+    <div className="max-w-7xl mx-auto space-y-6">
+      {/* Upload Section - Power BI Style */}
       <div
-        className={`glass rounded-xl p-6 border-2 border-dashed transition-all duration-300 ${
+        className={`glass-card p-8 border-2 border-dashed transition-all duration-300 ${
           isDragging
-            ? 'border-blue-500 bg-blue-500/10 scale-[1.01]'
+            ? 'border-blue-500 bg-blue-500/10'
             : 'border-white/10 hover:border-white/20'
         }`}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
+        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+        onDragLeave={(e) => { e.preventDefault(); setIsDragging(false); }}
+        onDrop={(e) => {
+          e.preventDefault();
+          setIsDragging(false);
+          const files = e.dataTransfer.files;
+          if (files.length > 0 && files[0].name.endsWith('.inp')) {
+            handleFileUpload(files[0]);
+          }
+        }}
       >
-        <div className="flex flex-col md:flex-row items-center gap-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center text-2xl">
-                📁
-              </div>
-              <div>
-                <h3 className="font-semibold">Upload .inp File</h3>
-                <p className="text-sm text-gray-400">
-                  Drag & drop or click to browse
-                </p>
-              </div>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center text-3xl">
+              📁
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">Upload FEA Model</h3>
+              <p className="text-sm text-gray-400">
+                Drag & drop your .inp file or click to browse
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="btn-primary text-sm py-2 px-6"
+              className="btn-primary flex items-center gap-2 text-sm"
             >
-              Choose File
+              <Upload className="w-4 h-4" />
+              Browse Files
             </button>
             <input
               ref={fileInputRef}
@@ -182,8 +168,8 @@ export function EnhancedChat() {
               className="hidden"
             />
             {file && (
-              <span className="text-sm text-green-400 flex items-center gap-2">
-                <span className="text-lg">✅</span>
+              <span className="flex items-center gap-2 text-sm text-green-400 bg-green-500/10 px-3 py-1.5 rounded-full">
+                <CheckCircle className="w-4 h-4" />
                 {file.name}
               </span>
             )}
@@ -192,24 +178,29 @@ export function EnhancedChat() {
       </div>
 
       {/* Dashboard */}
-      {model && <EnhancedDashboard model={model} />}
+      {model && <ProfessionalDashboard model={model} />}
 
       {/* Chat Section */}
-      <div className="glass rounded-xl border border-white/5 mt-4 overflow-hidden">
+      <div className="glass-card overflow-hidden">
         {/* Chat Header */}
-        <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm font-medium">CAE Copilot</span>
+            <span className="font-medium">CAE Copilot</span>
             <span className="text-xs text-gray-500">• Online</span>
+            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">AI Ready</span>
           </div>
-          <span className="text-xs text-gray-500">
-            {model ? `${model.nodes.toLocaleString()} nodes` : 'Ready'}
-          </span>
+          <div className="flex items-center gap-2">
+            {model && (
+              <span className="text-xs text-gray-400">
+                {model.nodes.toLocaleString()} nodes • {model.elements.toLocaleString()} elements
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Messages */}
-        <div className="h-[400px] overflow-y-auto p-4 space-y-3">
+        <div className="h-[400px] overflow-y-auto p-6 space-y-4">
           {messages.map((msg, i) => (
             <div
               key={i}
@@ -225,12 +216,12 @@ export function EnhancedChat() {
                 </div>
               )}
               {msg.role === 'user' && (
-                <div className="message-user text-sm">
+                <div className="message-user">
                   {msg.content}
                 </div>
               )}
               {msg.role === 'assistant' && (
-                <div className="message-assistant text-sm text-gray-200">
+                <div className="message-assistant">
                   <div className="whitespace-pre-wrap">{msg.content}</div>
                 </div>
               )}
@@ -238,10 +229,10 @@ export function EnhancedChat() {
           ))}
           {loading && (
             <div className="flex justify-start">
-              <div className="message-assistant text-sm text-gray-400">
-                <div className="flex items-center gap-2">
-                  <span className="spinner" />
-                  Thinking...
+              <div className="message-assistant">
+                <div className="flex items-center gap-3">
+                  <Loader2 className="w-5 h-5 animate-spin text-blue-400" />
+                  <span className="text-gray-400">Analyzing...</span>
                 </div>
               </div>
             </div>
@@ -256,55 +247,49 @@ export function EnhancedChat() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
+              onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
               placeholder="Ask about FEA, convergence, materials..."
-              className="input-primary"
+              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition"
               disabled={loading}
             />
             <button
               onClick={sendMessage}
               disabled={loading || !input.trim()}
-              className="btn-primary text-sm py-2 px-6 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary flex items-center gap-2 text-sm px-6 disabled:opacity-50"
             >
-              {loading ? 'Sending...' : 'Send'}
+              {loading ? 'Sending...' : (
+                <>
+                  <Send className="w-4 h-4" />
+                  Send
+                </>
+              )}
             </button>
           </div>
-          <div className="mt-2 text-xs text-gray-500 flex justify-between">
+          <div className="mt-2 flex justify-between items-center text-xs text-gray-500">
             <span>Supports ABAQUS .inp files</span>
-            <span className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-              AI ready
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="flex items-center gap-1">
+                <Zap className="w-3 h-3 text-blue-400" />
+                AI ready
+              </span>
+              <span>•</span>
+              <span>v1.0</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="mt-4 flex flex-wrap gap-2">
-        <button
-          onClick={() => setInput('What is the analysis type?')}
-          className="tag tag-primary hover:bg-blue-500/20 cursor-pointer"
-        >
-          🔍 Analysis Type
-        </button>
-        <button
-          onClick={() => setInput('Check my model health')}
-          className="tag tag-success hover:bg-green-500/20 cursor-pointer"
-        >
-          ✅ Model Health
-        </button>
-        <button
-          onClick={() => setInput('Why is my model not converging?')}
-          className="tag tag-warning hover:bg-yellow-500/20 cursor-pointer"
-        >
-          ⚠️ Convergence Issues
-        </button>
-        <button
-          onClick={() => setInput('Explain material properties')}
-          className="tag hover:bg-white/10 cursor-pointer"
-        >
-          📖 Material Help
-        </button>
+      <div className="flex flex-wrap gap-2">
+        {['🔍 Analysis Type', '✅ Model Health', '⚠️ Convergence Issues', '📖 Material Help'].map((text) => (
+          <button
+            key={text}
+            onClick={() => setInput(text.replace(/^[^\s]+\s/, ''))}
+            className="tag hover:bg-white/10 cursor-pointer"
+          >
+            {text}
+          </button>
+        ))}
       </div>
     </div>
   );
