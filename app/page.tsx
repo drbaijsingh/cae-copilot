@@ -1,4 +1,4 @@
-// app/page.tsx - COMPLETE UPDATE
+// app/page.tsx - COMPLETE FIXED VERSION (No Images)
 
 'use client';
 
