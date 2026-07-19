@@ -1,57 +1,111 @@
-import { AbaqusSummary } from "./types";
+// lib/abaqusParser.ts
 
-export function parseAbaqusInput(text: string): AbaqusSummary {
-  const lines = text.split(/\r?\n/);
+import { AbaqusSummary } from './types';
 
-  let modelName = "Unknown Model";
-  const elementTypes = new Set<string>();
-  const materials = new Set<string>();
+export function parseAbaqusFile(content: string, fileName: string): AbaqusSummary {
+  // Initialize variables with defaults
+  let modelName = fileName.replace(/\.inp$/i, '');
+  let analysisType = 'Unknown';
+  let elementTypes: string[] = [];
+  let materials: string[] = [];
+  let sections: string[] = [];
+  let nodeSets: string[] = [];
+  let elementSets: string[] = [];
+  let nodeCount = 0;
+  let elementCount = 0;
   let steps = 0;
+  let partNames: string[] = [];
 
+  const lines = content.split('\n');
+  
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
-
-    if (line.toUpperCase() === "*HEADING") {
-      if (i + 1 < lines.length) {
-        const heading = lines[i + 1].replace(/\*\*/g, "").trim();
-
-        const match =
-          heading.match(/Model name:\s*([^\s]+)/i) ||
-          heading.match(/Job name:\s*([^\s]+)/i);
-
-        if (match) {
-          modelName = match[1];
-        } else {
-          modelName = heading;
-        }
+    
+    // Detect analysis type
+    if (line.toLowerCase().includes('*static')) {
+      analysisType = 'Static';
+    } else if (line.toLowerCase().includes('*dynamic,explicit')) {
+      analysisType = 'Dynamic (Explicit)';
+    } else if (line.toLowerCase().includes('*dynamic')) {
+      analysisType = 'Dynamic (Implicit)';
+    } else if (line.toLowerCase().includes('*heat transfer')) {
+      analysisType = 'Heat Transfer';
+    } else if (line.toLowerCase().includes('*frequency')) {
+      analysisType = 'Frequency';
+    }
+    
+    // Extract materials
+    if (line.toLowerCase().includes('*material')) {
+      const nameMatch = line.match(/NAME\s*=\s*([^\s,]+)/i);
+      if (nameMatch) {
+        materials.push(nameMatch[1]);
       }
     }
-
-    if (line.toUpperCase().startsWith("*ELEMENT")) {
-      const match = line.match(/TYPE=([^,\s]+)/i);
-
-      if (match) {
-        elementTypes.add(match[1]);
+    
+    // Extract element types
+    if (line.toLowerCase().includes('*element')) {
+      const typeMatch = line.match(/TYPE\s*=\s*([^\s,]+)/i);
+      if (typeMatch) {
+        elementTypes.push(typeMatch[1]);
       }
     }
-
-    if (line.toUpperCase().startsWith("*MATERIAL")) {
-      const match = line.match(/NAME=([^,\s]+)/i);
-
-      if (match) {
-        materials.add(match[1]);
+    
+    // Extract node sets
+    if (line.toLowerCase().includes('*nset')) {
+      const nameMatch = line.match(/NAME\s*=\s*([^\s,]+)/i);
+      if (nameMatch) {
+        nodeSets.push(nameMatch[1]);
       }
     }
-
-    if (line.toUpperCase().startsWith("*STEP")) {
+    
+    // Extract element sets
+    if (line.toLowerCase().includes('*elset')) {
+      const nameMatch = line.match(/NAME\s*=\s*([^\s,]+)/i);
+      if (nameMatch) {
+        elementSets.push(nameMatch[1]);
+      }
+    }
+    
+    // Count steps
+    if (line.toLowerCase().includes('*step')) {
       steps++;
+    }
+    
+    // Count nodes
+    if (line.toLowerCase().includes('*node')) {
+      let count = 0;
+      for (let j = i + 1; j < lines.length; j++) {
+        const dataLine = lines[j].trim();
+        if (dataLine.startsWith('*') || dataLine === '') break;
+        if (dataLine.match(/^\d+[,;]/)) count++;
+      }
+      nodeCount += count;
+    }
+    
+    // Count elements
+    if (line.toLowerCase().includes('*element')) {
+      let count = 0;
+      for (let j = i + 1; j < lines.length; j++) {
+        const dataLine = lines[j].trim();
+        if (dataLine.startsWith('*') || dataLine === '') break;
+        if (dataLine.match(/^\d+[,;]/)) count++;
+      }
+      elementCount += count;
     }
   }
 
+  // Return complete object matching AbaqusSummary type
   return {
     modelName,
-    elementTypes: [...elementTypes],
-    materials: [...materials],
+    analysisType,
+    elementTypes: [...new Set(elementTypes)], // Remove duplicates
+    materials: [...new Set(materials)],       // Remove duplicates
+    sections,
+    nodeSets,
+    elementSets,
+    nodeCount,
+    elementCount,
     steps,
+    partNames,
   };
 }
