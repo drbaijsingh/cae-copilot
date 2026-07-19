@@ -1,35 +1,25 @@
-// app/page.tsx
+// app/page.tsx - COMPLETE FRESH VERSION
 
 'use client';
 
-import { useState, useEffect } from 'react';
-// app/page.tsx - CORRECT IMPORTS
-
+import { useState } from 'react';
 import { 
   ArrowRight, 
   Upload, 
   MessageSquare, 
   BarChart3, 
-  Shield, 
   Zap,
   CheckCircle,
   Star,
   Users,
   FileText,
   Bot,
-  TrendingUp,
-  ChevronRight,
   Menu,
-  X,
-  Github,      // ← This exists as "Github" (capital H)
-  Twitter,     // ← This exists as "Twitter"
-  Linkedin,    // ← This exists as "Linkedin" (capital L)
-  Mail
+  X
 } from 'lucide-react';
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeFeature, setActiveFeature] = useState(0);
 
   const features = [
     {
@@ -192,11 +182,11 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-green-400" />
-              10-2000 Hz Analysis
+              Model Health Check
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-green-400" />
-              Model Health Check
+              Instant Insights
             </div>
           </div>
         </div>
@@ -216,7 +206,6 @@ export default function Home() {
               <div 
                 key={index}
                 className="glass-card p-6 group cursor-pointer hover:border-blue-500/30"
-                onMouseEnter={() => setActiveFeature(index)}
               >
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mb-4 group-hover:scale-110 transition`}>
                   <feature.icon className="w-6 h-6" />
@@ -367,11 +356,11 @@ export default function Home() {
           </div>
           <div className="border-t border-white/5 mt-8 pt-8 flex flex-wrap justify-between items-center text-sm text-gray-400">
             <span>© 2026 CAE Copilot. All rights reserved.</span>
-            <div className="flex gap-4">
-              <a href="#" className="hover:text-white"><Github className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-white"><Twitter className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-white"><Linkedin className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-white"><Mail className="w-5 h-5" /></a>
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-white transition">GitHub</a>
+              <a href="#" className="hover:text-white transition">Twitter</a>
+              <a href="#" className="hover:text-white transition">LinkedIn</a>
+              <a href="#" className="hover:text-white transition">Email</a>
             </div>
           </div>
         </div>
