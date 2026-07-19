@@ -3,6 +3,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+// app/page.tsx - CORRECT IMPORTS
+
 import { 
   ArrowRight, 
   Upload, 
@@ -19,9 +21,9 @@ import {
   ChevronRight,
   Menu,
   X,
-  Github,      // ← FIXED: Capital H
-  Twitter,     // ← FIXED: Correct spelling
-  Linkedin,    // ← FIXED: Capital L
+  Github,      // ← This exists as "Github" (capital H)
+  Twitter,     // ← This exists as "Twitter"
+  Linkedin,    // ← This exists as "Linkedin" (capital L)
   Mail
 } from 'lucide-react';
 
