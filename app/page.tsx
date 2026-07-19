@@ -1,4 +1,4 @@
-// app/page.tsx - COMPLETE FRESH VERSION
+// app/page.tsx - WITH GENERIC TESTIMONIALS
 
 'use client';
 
@@ -48,24 +48,25 @@ export default function Home() {
     }
   ];
 
+  // ✅ GENERIC TESTIMONIALS - No specific names
   const testimonials = [
     {
-      name: 'Dr. Neelam Soni',
-      role: 'PhD Researcher, Bennett University',
-      content: 'CAE Copilot saved me hours of debugging. It instantly identified issues in my composite model.',
-      avatar: 'NS'
+      name: 'Senior CAE Engineer',
+      role: 'Automotive Industry',
+      content: 'CAE Copilot has transformed how I debug FEA models. It instantly identifies convergence issues that used to take hours.',
+      avatar: 'CE'
     },
     {
-      name: 'Kunal Saurabh',
-      role: 'PhD Researcher, Bennett University',
-      content: 'The material model validation feature is incredible. It caught errors I would have missed.',
-      avatar: 'KS'
+      name: 'PhD Researcher',
+      role: 'Composite Materials',
+      content: 'The material model validation feature is incredible. It caught errors in my composite models that I would have missed.',
+      avatar: 'PR'
     },
     {
-      name: 'Prof. R.N. Hota',
-      role: 'IIT ISM Dhanbad',
-      content: 'A game-changer for computational mechanics research. Highly recommended for FEA engineers.',
-      avatar: 'RH'
+      name: 'Professor of Mechanics',
+      role: 'Top Engineering Institute',
+      content: 'A game-changer for computational mechanics research. Highly recommended for FEA engineers and researchers.',
+      avatar: 'PM'
     }
   ];
 
@@ -218,11 +219,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials - GENERIC VERSION */}
       <section id="testimonials" className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Trusted by Researchers</h2>
+            <h2 className="text-4xl font-bold mb-4">Trusted by Engineers</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
               Join hundreds of engineers and researchers using CAE Copilot.
             </p>
