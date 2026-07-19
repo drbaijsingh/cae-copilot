@@ -1,5 +1,6 @@
 // lib/abaqus/types.ts
 
+// ✅ MAKE SURE THIS IS EXPORTED
 export interface EngineeringModel {
   fileName: string;
   modelName: string;
@@ -19,6 +20,21 @@ export interface EngineeringModel {
   steps: any[];
   warnings: string[];
   healthScore: number;
+}
+
+// Also export other types if needed
+export interface AbaqusSummary {
+  modelName: string;
+  analysisType?: string;
+  elementTypes: string[];
+  materials: string[];
+  sections?: string[];
+  nodeSets?: string[];
+  elementSets?: string[];
+  nodeCount?: number;
+  elementCount?: number;
+  steps: number;
+  partNames?: string[];
 }
 
 export interface ParserResult {
