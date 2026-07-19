@@ -19,9 +19,9 @@ import {
   ChevronRight,
   Menu,
   X,
-  Github,
-  Twitter,
-  Linkedin,
+  Github,      // ← FIXED: Capital H
+  Twitter,     // ← FIXED: Correct spelling
+  Linkedin,    // ← FIXED: Capital L
   Mail
 } from 'lucide-react';
 
